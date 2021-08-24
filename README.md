@@ -12,7 +12,7 @@
 
 #### Clone este repositório
 ```bash
-git clone https://github.com/cesarakt/Contador.git
+git clone https://github.com/cesarakt/Projeto-Instagram.git
 ```
 
 #### Instale as dependências
