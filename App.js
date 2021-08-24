@@ -1,95 +1,105 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity, Image, FlatList } from 'react-native';
+
+import Lista from './Components/Lista';
 
 export default function App() {
-  const [timer, setTimer] = useState(0);
-  const [verificarTimer, setVerificarTimer] = useState(null);
-  const [contar, setContar] = useState('VAI');
-  const [ultimo, setUltimo] = useState(null);
+  const logo = require('./assets/logo.png');
+  const send = require('./assets/send.png');
 
-  const imagem = require('./assets/cronometro.png');
-  const marcador = ultimo > 0 ? 'Ultimo tempo: '+ ultimo.toFixed(2) + 's' : '';
-
-  function vai() {
-
-    if (verificarTimer != null) {
-      clearInterval(verificarTimer);
-      setVerificarTimer(null);
-      setContar('VAI');
-    } else {
-      setVerificarTimer(setInterval(() => {
-        setTimer(timer => timer + 0.1)
-      }, 100));
-      setContar('PARAR');
+  const feed = [
+    {
+      id: '1', 
+      nome: 'Lucas Silva',
+      descricao: 'Mais um dia de muitos bugs :)', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',  
+      likeada: false, 
+      likers: 0
+     },
+    {
+      id: '2', 
+      nome: 'Matheus', 
+      descricao: 'Isso sim é ser raiz!!!!!', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png', 
+      likeada: false, 
+      likers: 0
+    },
+    {
+      id: '3', 
+      nome: 'Jose Augusto', 
+      descricao: 'Bora trabalhar Haha', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',  
+      likeada: false, 
+      likers: 3
+    },
+    {
+      id: '4', 
+      nome: 'Gustavo Henrique', 
+      descricao: 'Isso sim que é TI!', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png', 
+      likeada: false, 
+      likers: 1
+    },
+    {
+      id: '5', 
+      nome: 'Guilherme', 
+      descricao: 'Boa tarde galera do insta...', 
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+      imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
+      likeada: false, 
+      likers: 32
     }
-  }
+  ];
 
-  function limpar() {
-    if (verificarTimer != null) {
-      clearInterval(verificarTimer);
-      setVerificarTimer(null);
-      setContar('VAI');
-    }
-    setUltimo(timer);
-    setTimer(0);
-  };
+  const render = item => <Lista data={item} />
 
   return (
     <View style={styles.container}>
-      <Image source={imagem} style={styles.cronometro} />
-      <Text style={styles.timer}>{timer.toFixed(1)}</Text>
-      <View style={styles.boxBtn}>
-        <TouchableOpacity style={styles.btn} onPress={vai}><Text style={styles.btnTexto}>{contar}</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={limpar}><Text style={styles.btnTexto}>LIMPAR</Text></TouchableOpacity>
+      <View style={styles.header}>
+        <TouchableOpacity>
+          <Image
+            source={logo}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <Image
+            source={send}
+            style={styles.send}
+          />
+        </TouchableOpacity>
       </View>
-      <View style={styles.boxUltimo}>
-        <Text style={styles.ultimo}>
-          {marcador}
-        </Text>
-      </View>
+      <FlatList 
+        showsVerticalScrollIndicator={false}
+        data={feed}
+        renderItem={render}
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00aeef',
-    alignItems: 'center',
-    justifyContent: 'center'
   },
-  timer: {
-    color: "#FFF",
-    fontSize: 50,
-    marginTop: -150,
-    fontWeight: 'bold'
-  },
-  boxBtn: {
+  header: {
+    backgroundColor: '#FFF',
+    height: 55,
+    marginTop: 25,
     flexDirection: 'row',
-    marginTop: 100,
-    height: 40,
-  },
-  btn: {
-    flex: 1,
-    backgroundColor: "#FFF",
-    height: 40,
-    margin: 17,
     alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8
+    justifyContent: 'space-between',
+    padding: 5,
+    borderBottomWidth: 0.2,
+    shadowColor: '#000',
+    elevation: 1
   },
-  btnTexto: {
-    color: '#00aeef',
-    fontSize: 17,
-    fontWeight: 'bold'
-  },
-  boxUltimo: {
-    marginTop: 45,
-  },
-  ultimo: {
-    fontSize: 25,
-    color: '#FFF',
-    fontStyle: 'italic'
+  send: {
+    width: 23,
+    height: 20
   }
-
 });
