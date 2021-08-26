@@ -4,6 +4,8 @@ import { StyleSheet, View, TouchableOpacity, Image, FlatList } from 'react-nativ
 import Lista from './Components/Lista';
 
 export default function App() {
+  
+
   const logo = require('./assets/logo.png');
   const send = require('./assets/send.png');
 
@@ -55,7 +57,9 @@ export default function App() {
     }
   ];
 
-  const render = item => <Lista data={item} />
+  const render = item => <Lista data={item} />;
+
+  const key = item => item.id;
 
   return (
     <View style={styles.container}>
@@ -74,10 +78,12 @@ export default function App() {
         </TouchableOpacity>
       </View>
       <FlatList 
+        keyExtractor={key}
         showsVerticalScrollIndicator={false}
         data={feed}
         renderItem={render}
       />
+      
     </View>
   );
 };
